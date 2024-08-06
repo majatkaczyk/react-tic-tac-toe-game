@@ -77,7 +77,7 @@ export const Machine = createMachine(
     actions: {
       resetBoard: assign(initialContext),
       setWinner: assign({
-        winner: ({ context }) => (context.currentPlayer === "x" ? "x" : "o"),
+        winner: ({ context }) => (context.currentPlayer === "x" ? "o" : "x"),
       }),
       updateBoard: assign({
         board: ({ context, event }) => {
