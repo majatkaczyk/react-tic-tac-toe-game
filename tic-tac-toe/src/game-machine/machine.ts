@@ -61,7 +61,10 @@ export const Machine = createMachine(
         },
       },
       gameOver: {
-        states: { winner: {}, draw: {} },
+        states: {
+          winner: { tags: "winner", entry: "setWinner" },
+          draw: { tags: "draw" },
+        },
         on: {
           RESET: { target: "playing", actions: "resetBoard" },
         },
@@ -69,7 +72,12 @@ export const Machine = createMachine(
     },
   },
   {
-    actions: { resetBoard: assign(initialContext) },
+    actions: {
+      resetBoard: assign(initialContext),
+      setWinner: assign({
+        winner: ({ context }) => (context.currentPlayer === "x" ? "x" : "o"),
+      }),
+    },
     guards: {
       checkMove: ({ context, event }) => {
         if (event.type !== "PLAY") {
@@ -77,10 +85,12 @@ export const Machine = createMachine(
         }
         return context.board[event.value] === null;
       },
+
       checkDraw: ({ context }) => {
         const { moves } = context;
         return moves === 9;
       },
+
       checkWinner: ({ context }) => {
         const { board } = context;
         const winnerLines = [
@@ -93,7 +103,9 @@ export const Machine = createMachine(
           [0, 4, 8],
           [2, 4, 6],
         ];
+
         const length = winnerLines.length;
+
         for (let i = 0; i < length; i++) {
           const [a, b, c] = winnerLines[i];
 

@@ -1,12 +1,12 @@
 import { useState } from "react";
-import calculateWinner from "../utils/calulate-winner";
+
 import Board from "./Board";
 
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [stepNumber, setStepNumber] = useState(0);
   const [xIsNext, setXisNext] = useState(true);
-  const winner = calculateWinner(history[stepNumber]);
+  //   const winner = calculateWinner(history[stepNumber]);
 
   const handleClick = (i: number) => {
     const timeInHistory = history.slice(0, stepNumber + 1);
@@ -15,7 +15,7 @@ export default function Game() {
 
     const squares = [...current];
 
-    if (winner || squares[i]) return;
+    // if (winner || squares[i]) return;
 
     squares[i] = xIsNext ? "X" : "O";
     setHistory([...timeInHistory, squares]);
@@ -28,9 +28,9 @@ export default function Game() {
     <>
       <Board squares={history[stepNumber]} onClick={handleClick} />
       <div>
-        <p>
+        {/* <p>
           {winner ? `Winner: ${winner}` : `Next Player ${xIsNext ? "X" : "O"}`}
-        </p>
+        </p> */}
       </div>
     </>
   );
