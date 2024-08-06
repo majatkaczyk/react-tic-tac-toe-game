@@ -1,4 +1,4 @@
-import { assign, createMachine } from "xstate";
+import { assertEvent, assign, createMachine } from "xstate";
 
 type Player = "x" | "o";
 
@@ -76,6 +76,21 @@ export const Machine = createMachine(
       resetBoard: assign(initialContext),
       setWinner: assign({
         winner: ({ context }) => (context.currentPlayer === "x" ? "x" : "o"),
+      }),
+      updateBoard: assign({
+        board: ({ context, event }) => {
+          const { board, currentPlayer } = context;
+          assertEvent(event, "PLAY");
+          const updatedBoard = [...board];
+          updatedBoard[event.value] = currentPlayer;
+          return updatedBoard;
+        },
+        currentPlayer: ({ context }) => {
+          return context.currentPlayer === "x" ? "o" : "x";
+        },
+        moves: ({ context }) => {
+          return context.moves + 1;
+        },
       }),
     },
     guards: {
