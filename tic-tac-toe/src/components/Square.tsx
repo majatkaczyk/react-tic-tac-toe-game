@@ -1,10 +1,15 @@
 import React from "react";
 
 interface SquareProps {
-  value: string;
+  player: "x" | "o";
   onClickSquare: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  index: number;
 }
 
-export default function Square({ value, onClickSquare }: SquareProps) {
-  return <button onClick={onClickSquare}>{value}</button>;
+export default function Square({ player, onClickSquare, index }: SquareProps) {
+  return (
+    <button key={index} onClick={onClickSquare}>
+      {player}
+    </button>
+  );
 }

@@ -26,8 +26,8 @@ export const Machine = createMachine(
         states: {
           xTurn: {
             always: [
-              { target: "gameOver.winner", guard: "checkWinner" },
-              { target: "gameOver.draw", guard: "checkDraw" },
+              { target: "#gameOver.winner", guard: "checkWinner" },
+              { target: "#gameOver.draw", guard: "checkDraw" },
             ],
             on: {
               PLAY: {
@@ -43,8 +43,8 @@ export const Machine = createMachine(
           },
           oTurn: {
             always: [
-              { target: "gameOver.winner", guard: "checkWinner" },
-              { target: "gameOver.draw", guard: "checkDraw" },
+              { target: "#gameOver.winner", guard: "checkWinner" },
+              { target: "#gameOver.draw", guard: "checkDraw" },
             ],
             on: {
               PLAY: {
@@ -61,6 +61,8 @@ export const Machine = createMachine(
         },
       },
       gameOver: {
+        id: "gameOver",
+        initial: "winner",
         states: {
           winner: { tags: "winner", entry: "setWinner" },
           draw: { tags: "draw" },
