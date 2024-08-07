@@ -2,7 +2,17 @@ import { useState } from "react";
 import Square from "./Square";
 import { useMachine } from "@xstate/react";
 import { Machine } from "../game-machine/machine";
-import { Board, LeftColumn, Main, RightColumn } from "./gameStyles";
+import {
+  BigContainer,
+  Board,
+  Button,
+  Container,
+  Header,
+  LeftColumn,
+  Main,
+  RightColumn,
+  SubHeader,
+} from "./gameStyles";
 
 export default function Game() {
   const [state, send] = useMachine(Machine);
@@ -16,7 +26,17 @@ export default function Game() {
           <button onClick={() => send({ type: "RESET" })}>Reset</button>
         </div>
       )}
+
       <LeftColumn>
+        <Container>
+          {state.matches("playing") ? (
+            <Header>{`${state.context.currentPlayer} Turn`}</Header> //better if x / o change to tick / tack
+          ) : (
+            <div>show winner if possible</div>
+          )}
+        </Container>
+
+        {/* change to winner */}
         <Board>
           {Array(9)
             .fill(null)
@@ -32,14 +52,17 @@ export default function Game() {
         </Board>
       </LeftColumn>
       <RightColumn>
-        <div>TIC TAC TOE Game</div>
-        <div>
-          The player who succeeds in placing three of their marks in a
-          horizontal, vertical, or diagonal row is the winner.
-        </div>
-        <div>Tick's Turn</div>
-        <div>show winner if possible</div>
-        <button>reset</button>
+        <BigContainer>
+          <div>
+            <Header>TIC TAC TOE Game</Header>
+            <SubHeader>
+              The player who places three of their marks in a horizontal,
+              vertical, or diagonal row is the winner.
+            </SubHeader>
+          </div>
+
+          <Button>reset</Button>
+        </BigContainer>
       </RightColumn>
     </Main>
   );

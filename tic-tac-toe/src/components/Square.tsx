@@ -1,4 +1,5 @@
 import React from "react";
+import { Tile } from "./gameStyles";
 
 interface SquareProps {
   player: "x" | "o" | null;
@@ -8,8 +9,8 @@ interface SquareProps {
 
 export default function Square({ player, onClickSquare, index }: SquareProps) {
   return (
-    <button key={index} onClick={onClickSquare}>
+    <Tile key={index} onClick={onClickSquare}>
       {player}
-    </button>
+    </Tile>
   );
 }
