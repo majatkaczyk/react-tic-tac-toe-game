@@ -1,16 +1,13 @@
-import { useState } from "react";
 import Square from "./Square";
 import { useMachine } from "@xstate/react";
 import { Machine } from "../game-machine/machine";
 import {
-  BigContainer,
   Board,
+  Box,
   Button,
   Container,
   Header,
-  LeftColumn,
   Main,
-  RightColumn,
   SubHeader,
 } from "./gameStyles";
 
@@ -19,24 +16,21 @@ export default function Game() {
 
   return (
     <Main>
-      {state.matches("gameOver") && (
-        <div>
-          {state.hasTag("winner") && <div>Winner: {state.context.winner}</div>}
-          {state.hasTag("draw") && <div>Draw</div>}
-          <button onClick={() => send({ type: "RESET" })}>Reset</button>
-        </div>
-      )}
-
-      <LeftColumn>
-        <Container>
-          {state.matches("playing") ? (
-            <Header>{`${state.context.currentPlayer} Turn`}</Header> //better if x / o change to tick / tack
-          ) : (
-            <div>show winner if possible</div>
+      <Container>
+        <Header>Tic - Tac - Toe Game</Header>
+        <Box>
+          {state.matches("playing") && (
+            <SubHeader>{`${state.context.currentPlayer} Turn`}</SubHeader>
           )}
-        </Container>
-
-        {/* change to winner */}
+          {state.matches("gameOver") && (
+            <div>
+              {state.hasTag("winner") && (
+                <SubHeader>{`${state.context.winner} is the winner`}</SubHeader>
+              )}
+              {state.hasTag("draw") && <Header>{`Draw`}</Header>}
+            </div>
+          )}
+        </Box>
         <Board>
           {Array(9)
             .fill(null)
@@ -50,20 +44,8 @@ export default function Game() {
               />
             ))}
         </Board>
-      </LeftColumn>
-      <RightColumn>
-        <BigContainer>
-          <div>
-            <Header>TIC TAC TOE Game</Header>
-            <SubHeader>
-              The player who places three of their marks in a horizontal,
-              vertical, or diagonal row is the winner.
-            </SubHeader>
-          </div>
-
-          <Button>reset</Button>
-        </BigContainer>
-      </RightColumn>
+        <Button onClick={() => send({ type: "RESET" })}>Reset</Button>
+      </Container>
     </Main>
   );
 }

@@ -36,10 +36,6 @@ export const Machine = createMachine(
                 actions: "updateBoard",
               },
             },
-            // currentPlayer x
-            // check if chosen square is empty
-            // show x if possible
-            // target oTurn if !winners
           },
           oTurn: {
             always: [
@@ -53,10 +49,6 @@ export const Machine = createMachine(
                 actions: "updateBoard",
               },
             },
-            // currentPlayer o
-            // check if chosen square is empty
-            // show o if possible
-            // target xTurn if !winner
           },
         },
       },
