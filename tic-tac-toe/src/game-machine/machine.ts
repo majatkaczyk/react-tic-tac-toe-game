@@ -18,10 +18,10 @@ const initialContext: TicTacToeContext = {
 
 export const Machine = createMachine(
   {
-    initial: "playing",
+    initial: "idle",
     context: initialContext,
     states: {
-      idle: {},
+      idle: { always: [{ target: "playing" }] },
       playing: {
         initial: "xTurn",
         states: {
@@ -53,7 +53,7 @@ export const Machine = createMachine(
           },
         },
         on: {
-          RESET: { target: "playing", actions: "resetBoard" },
+          RESET: { target: "idle", actions: "resetBoard" },
         },
       },
       won: {
@@ -61,14 +61,14 @@ export const Machine = createMachine(
         entry: "setWinner",
         tags: "winner",
         on: {
-          RESET: { target: "playing", actions: "resetBoard" },
+          RESET: { target: "idle", actions: "resetBoard" },
         },
       },
       draw: {
         id: "draw",
         tags: "draw",
         on: {
-          RESET: { target: "playing", actions: "resetBoard" },
+          RESET: { target: "idle", actions: "resetBoard" },
         },
       },
     },
