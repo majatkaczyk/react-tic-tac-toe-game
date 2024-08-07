@@ -12,6 +12,7 @@ export const Board = styled.div`
 export const Main = styled.div`
   display: flex;
   height: 100vh;
+  font-family: "Poppins";
 `;
 
 export const LeftColumn = styled.div`

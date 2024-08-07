@@ -2,8 +2,7 @@ import { useState } from "react";
 import Square from "./Square";
 import { useMachine } from "@xstate/react";
 import { Machine } from "../game-machine/machine";
-import styled from "styled-components";
-import { Board, LeftColumn, Main, RightColumn } from "./styles";
+import { Board, LeftColumn, Main, RightColumn } from "./gameStyles";
 
 export default function Game() {
   const [state, send] = useMachine(Machine);
@@ -34,6 +33,10 @@ export default function Game() {
       </LeftColumn>
       <RightColumn>
         <div>TIC TAC TOE Game</div>
+        <div>
+          The player who succeeds in placing three of their marks in a
+          horizontal, vertical, or diagonal row is the winner.
+        </div>
         <div>Tick's Turn</div>
         <div>show winner if possible</div>
         <button>reset</button>
