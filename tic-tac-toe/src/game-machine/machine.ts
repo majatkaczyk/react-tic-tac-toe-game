@@ -21,13 +21,14 @@ export const Machine = createMachine(
     initial: "playing",
     context: initialContext,
     states: {
+      idle: {},
       playing: {
         initial: "xTurn",
         states: {
           xTurn: {
             always: [
-              { target: "#gameOver.winner", guard: "checkWinner" },
-              { target: "#gameOver.draw", guard: "checkDraw" },
+              { target: "#won", guard: "checkWinner" },
+              { target: "#draw", guard: "checkDraw" },
             ],
             on: {
               PLAY: {
@@ -39,8 +40,8 @@ export const Machine = createMachine(
           },
           oTurn: {
             always: [
-              { target: "#gameOver.winner", guard: "checkWinner" },
-              { target: "#gameOver.draw", guard: "checkDraw" },
+              { target: "#won", guard: "checkWinner" },
+              { target: "#draw", guard: "checkDraw" },
             ],
             on: {
               PLAY: {
@@ -51,14 +52,21 @@ export const Machine = createMachine(
             },
           },
         },
-      },
-      gameOver: {
-        id: "gameOver",
-        initial: "winner",
-        states: {
-          winner: { tags: "winner", entry: "setWinner" },
-          draw: { tags: "draw" },
+        on: {
+          RESET: { target: "playing", actions: "resetBoard" },
         },
+      },
+      won: {
+        id: "won",
+        entry: "setWinner",
+        tags: "winner",
+        on: {
+          RESET: { target: "playing", actions: "resetBoard" },
+        },
+      },
+      draw: {
+        id: "draw",
+        tags: "draw",
         on: {
           RESET: { target: "playing", actions: "resetBoard" },
         },

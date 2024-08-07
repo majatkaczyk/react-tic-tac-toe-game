@@ -22,14 +22,10 @@ export default function Game() {
           {state.matches("playing") && (
             <SubHeader>{`${state.context.currentPlayer} Turn`}</SubHeader>
           )}
-          {state.matches("gameOver") && (
-            <div>
-              {state.hasTag("winner") && (
-                <SubHeader>{`${state.context.winner} is the winner`}</SubHeader>
-              )}
-              {state.hasTag("draw") && <Header>{`Draw`}</Header>}
-            </div>
+          {state.matches("won") && (
+            <SubHeader>{`${state.context.winner} is the winner`}</SubHeader>
           )}
+          {state.matches("draw") && <SubHeader>Draw</SubHeader>}
         </Box>
         <Board>
           {Array(9)
