@@ -23,36 +23,16 @@ export const Machine = createMachine(
     states: {
       idle: { always: [{ target: "playing" }] },
       playing: {
-        initial: "xTurn",
-        states: {
-          xTurn: {
-            always: [
-              { target: "#won", guard: "checkWinner" },
-              { target: "#draw", guard: "checkDraw" },
-            ],
-            on: {
-              PLAY: {
-                target: "oTurn",
-                guard: "checkMove",
-                actions: "updateBoard",
-              },
-            },
-          },
-          oTurn: {
-            always: [
-              { target: "#won", guard: "checkWinner" },
-              { target: "#draw", guard: "checkDraw" },
-            ],
-            on: {
-              PLAY: {
-                target: "xTurn",
-                guard: "checkMove",
-                actions: "updateBoard",
-              },
-            },
-          },
-        },
+        always: [
+          { target: "#won", guard: "checkWinner" },
+          { target: "#draw", guard: "checkDraw" },
+        ],
         on: {
+          PLAY: {
+            target: "playing",
+            guard: "checkMove",
+            actions: "updateBoard",
+          },
           RESET: { target: "idle", actions: "resetBoard" },
         },
       },
