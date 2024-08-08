@@ -21,7 +21,7 @@ export const Machine = createMachine(
     initial: "idle",
     context: initialContext,
     states: {
-      idle: { always: [{ target: "playing" }] },
+      idle: { on: { PLAY: { target: "playing" } } },
       playing: {
         always: [
           { target: "#won", guard: "checkWinner" },

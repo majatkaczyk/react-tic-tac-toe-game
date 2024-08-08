@@ -13,12 +13,15 @@ import {
 
 export default function Game() {
   const [state, send] = useMachine(Machine);
-
+  console.log(state.value);
   return (
     <Main>
       <Container>
         <Header>Tic - Tac - Toe Game</Header>
         <Box>
+          {state.matches("idle") && (
+            <SubHeader>Click on board to start!</SubHeader>
+          )}
           {state.matches("playing") && (
             <SubHeader>{`${state.context.currentPlayer} Turn`}</SubHeader>
           )}
