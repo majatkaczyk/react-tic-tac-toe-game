@@ -13,7 +13,7 @@ import {
 
 export default function Game() {
   const [state, send] = useMachine(Machine);
-  console.log(state.value);
+
   return (
     <Main>
       <Container>
